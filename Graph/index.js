@@ -50,6 +50,8 @@ const traverseDFS = (vertex, graph, values, seen) => {
   }
 };
 
+console.log(traversalBFS(adjacencyList));
+
 const headId = 2;
 
 const n = 6;
