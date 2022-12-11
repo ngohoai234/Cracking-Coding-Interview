@@ -1,25 +1,29 @@
-const string = "bbbbb";
+const string = "pwwkew";
 
+// abcbdaac
+// aba
+// tmmzuxt
+
+// Time Complexity : O(n)
+// Space : O(n)
 const findTheLongestString = (str) => {
-  if (typeof str !== "string") {
-    return "Invalid Input";
+  if (str.length <= 1) {
+    return str.length;
   }
-  if (!str.length || str.length < 2) {
-    return string.length;
-  }
-  const hashInput = {};
-  let left = 0;
-  let longest = 0;
+  let longest = 0,
+    left = 0;
+  const hash = new Map();
+
   for (let right = 0; right < str.length; right++) {
-    const currentChar = str[right];
-    const indexChar = hashInput[currentChar];
-
-    if (indexChar >= left) {
-      left = indexChar + 1;
+    const element = str[right];
+    if (hash.has(element)) {
+      const idxDuplicateChar = hash.get(element);
+      if (left <= idxDuplicateChar) {
+        left = idxDuplicateChar + 1;
+      }
     }
-
-    hashInput[currentChar] = right;
     longest = Math.max(longest, right - left + 1);
+    hash.set(element, right);
   }
   return longest;
 };
