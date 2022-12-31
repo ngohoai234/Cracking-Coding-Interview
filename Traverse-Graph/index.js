@@ -28,4 +28,15 @@ const traverse = (matrix) => {
   return values;
 };
 
-console.log(traverse(adjList));
+const traverseDFS = (matrix, values, currentVertext, seen) => {
+  values.push(currentVertext);
+  seen[currentVertext] = true;
+
+  const connections = matrix[currentVertext];
+  for (let i = 0; i < connections.length; i++) {
+    const connection = connections[i];
+    if (!seen.hasOwnProperty(connection)) {
+      traverseDFS(matrix, values, connection, seen);
+    }
+  }
+};
