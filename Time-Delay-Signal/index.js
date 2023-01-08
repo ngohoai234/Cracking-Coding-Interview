@@ -83,31 +83,66 @@ class PriorityQueue {
   }
 }
 
+// const networkDelayTime = (times, n, k) => {
+//   const distances = new Array(n).fill(Infinity);
+//   const adjList = distances.map(() => []);
+//   const heap = new PriorityQueue((a, b) => distances[a] < distances[b]);
+//   for (let i = 0; i < times.length; i++) {
+//     const [source, target, weight] = times[i];
+//     adjList[source - 1].push([target - 1, weight]);
+//   }
+//   distances[k - 1] = 0;
+//   heap.push(k - 1);
+
+//   while (!heap.isEmpty()) {
+//     const currentVertex = heap.pop();
+//     const adjacent = adjList[currentVertex];
+//     for (let i = 0; i < adjacent.length; i++) {
+//       const neighBoringVertex = adjacent[i][0];
+//       const weight = adjacent[i][1];
+
+//       if (distances[currentVertex] + weight < distances[neighBoringVertex]) {
+//         distances[neighBoringVertex] = distances[currentVertex] + weight;
+//         heap.push(neighBoringVertex);
+//       }
+//     }
+//   }
+//   const maxValue = Math.max(...distances);
+//   return Number.isFinite(maxValue) ? maxValue : -1;
+// };
+// console.log(networkDelayTime([[1, 2, 1]], 2, 2));
+
+// bellman-ford solution
+
 const networkDelayTime = (times, n, k) => {
   const distances = new Array(n).fill(Infinity);
-  const adjList = distances.map(() => []);
-  const heap = new PriorityQueue((a, b) => distances[a] < distances[b]);
-  for (let i = 0; i < times.length; i++) {
-    const [source, target, weight] = times[i];
-    adjList[source - 1].push([target - 1, weight]);
-  }
   distances[k - 1] = 0;
-  heap.push(k - 1);
 
-  while (!heap.isEmpty()) {
-    const currentVertex = heap.pop();
-    const adjacent = adjList[currentVertex];
-    for (let i = 0; i < adjacent.length; i++) {
-      const neighBoringVertex = adjacent[i][0];
-      const weight = adjacent[i][1];
-
-      if (distances[currentVertex] + weight < distances[neighBoringVertex]) {
-        distances[neighBoringVertex] = distances[currentVertex] + weight;
-        heap.push(neighBoringVertex);
+  for (let i = 0; i < n - 1; i++) {
+    let count = 0;
+    for (let j = 0; j < times.length; j++) {
+      const [source, target, weight] = times[j];
+      if (distances[source - 1] + weight < distances[target - 1]) {
+        distances[target - 1] = distances[source - 1] + weight;
+        count++;
       }
+    }
+    if (count === 0) {
+      break;
     }
   }
   const maxValue = Math.max(...distances);
+
   return Number.isFinite(maxValue) ? maxValue : -1;
 };
-console.log(networkDelayTime([[1, 2, 1]], 2, 2));
+console.log(
+  networkDelayTime(
+    [
+      [2, 1, 1],
+      [2, 3, 1],
+      [3, 4, 1],
+    ],
+    4,
+    2
+  )
+);
