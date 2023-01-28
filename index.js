@@ -1,6 +1,6 @@
 const sortCharacterFrequently = (str) => {
   const hashCount = new Map();
-  const tempStr = str.split("").sort().join("");
+  const tempStr = str.split('').sort().join('');
 
   for (const character of tempStr) {
     let count = hashCount.get(character);
@@ -15,8 +15,8 @@ const sortCharacterFrequently = (str) => {
   });
 
   return sortedString.reduce((acc, item) => {
-    return acc + new Array(hashCount.get(item)).fill(item).join("");
-  }, "");
+    return acc + new Array(hashCount.get(item)).fill(item).join('');
+  }, '');
 };
 
 const checkDirection = (d1, d2, m) => {
